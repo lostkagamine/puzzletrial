@@ -1,5 +1,6 @@
 return {
     name = "Intermediate Course",
+    music = "level2",
     sort = 1,
     stages = {
         {
@@ -129,6 +130,27 @@ return {
             end,
             getGoalText = function(self)
                 return ("%d/2"):format(self.pcs)
+            end
+        },
+        {
+            {
+                "[annoyed]I'm sorry, Mihara."
+            },
+            objective = "Clear 10 lines!",
+            update = function(self, dt)
+                if gamestate.lines >= 10 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%d/10"):format(gamestate.lines)
+            end,
+            draw = function(self)
+                if gamestate.running then
+                    love.graphics.draw(gfx.mihara, 50, (math.sin(gamestate.time * 4) * 800))
+                    love.graphics.draw(gfx.mihara, 50, (math.sin((gamestate.time+2) * 4) * 800))
+                    love.graphics.draw(gfx.mihara, 50, (math.sin((gamestate.time+5258) * 4) * 800))
+                end
             end
         }
     }

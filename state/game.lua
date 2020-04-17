@@ -211,6 +211,10 @@ return {
             love.graphics.print(stage.objective, 800 - 20 - (font.reg2:getWidth(stage.objective)), e+(35*2))
         end
 
+        if stage.draw then
+            stage:draw()
+        end
+
         if inDialogue then
             love.graphics.setColor(0, 0, 0, 0.6)
             love.graphics.rectangle('fill', 0, 0, 800, 600)

@@ -88,7 +88,8 @@ gfx = {
     logo = love.graphics.newImage('data/logo.png'),
     block = love.graphics.newImage('data/gfx/block.png'),
     smallblock = love.graphics.newImage('data/gfx/smallblock.png'),
-    background = love.graphics.newImage('data/gfx/background.png')
+    background = love.graphics.newImage('data/gfx/background.png'),
+    mihara = love.graphics.newImage('data/gfx/mihara.jpg')
 }
 
 charasprites = {
