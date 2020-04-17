@@ -123,7 +123,6 @@ return {
                 "It'll be fine, I promise."
             },
             objective = "Clear 10 lines!",
-            blockRotate = true,
             onStart = function(self)
                 self.counter = 0
             end,
@@ -131,7 +130,7 @@ return {
                 self.counter = self.counter + dt
                 if self.counter >= 1 and gamestate.running then
                     self.counter = 0
-                    gamestate:rotate(1, true)
+                    gamestate:rotate(1)
                 end
                 if gamestate.lines >= 10 then
                     gamestate:signalClear()
