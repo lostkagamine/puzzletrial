@@ -155,7 +155,7 @@ return {
         },
         {
             {
-                "So, the Roll-Roll stage was a bit of a foreshadowing.\n",
+                "So, the Roll-Roll stage was a bit of a foreshadowing.",
                 "[smug]Reversal time!!"
             },
             objective = "Clear 10 lines!",
@@ -169,6 +169,29 @@ return {
             end,
             postInit = function(self, gs)
                 gs.lrReverse = true
+            end
+        },
+        {
+            {
+                "Time for... fast drop... with a twist!"
+            },
+            objective = "Clear 10 lines!",
+            update = function(self, dt)
+                if gamestate.lines >= 10 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%d/10"):format(gamestate.lines)
+            end,
+            postInit = function(self, gs)
+                gs.delays.gravity = 1/3
+                gs.delays.lock = 0
+                gs.delays.are = 18 * (1/60)
+                gs.delays.lineare = 24 * (1/60)
+                gs.delays.clear = 18 * (1/60)
+                gs.delays.das = 16 * (1/60)
+                gs.delays.arr = 6 * (1/60)
             end
         }
     }
