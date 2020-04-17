@@ -20,6 +20,6 @@ Fonts from Google Font Library
 Powered by Love2D]], 20, 20)
     end,
     keydown = function(self, k)
-        if k == 'escape' then switchstate('title') end
+        if k == 'escape' then stopmusic() switchstate('title') end
     end
 }
