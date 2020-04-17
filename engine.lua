@@ -208,6 +208,8 @@ function Game:initialize(rotation)
 
     self.invisible = false
 
+    self.lrReverse = false
+
     self.disabledPieces = {}
     self.shiftDownRows = {}
 
@@ -287,6 +289,9 @@ function Game:sound(s)
 end
 
 function Game:movePiece(ex, ey)
+    if self.lrReverse then
+        ex = ex * -1
+    end
     local tx, ty = self.x+ex, self.y+ey
     if not self.board:isColliding(nil, tx, ty) then
         self.x, self.y = tx, ty
@@ -355,7 +360,9 @@ function Game:doARR(dt)
         while self.counters.arr >= self.delays.arr do
             self:movePiece(-1, 0)
             self.counters.arr = self.counters.arr - self.delays.arr
-            if self.board:isColliding(nil, self.x-1) then break end
+            local j = 1
+            if self.lrReverse then j = j * -1 end
+            if self.board:isColliding(nil, self.x-j) then break end
             self.lastAction = 'move'
             self:sound('move')
         end
@@ -365,7 +372,9 @@ function Game:doARR(dt)
         while self.counters.arr >= self.delays.arr do
             self:movePiece(1, 0)
             self.counters.arr = self.counters.arr - self.delays.arr
-            if self.board:isColliding(nil, self.x+1) then break end
+            local j = 1
+            if self.lrReverse then j = j * -1 end
+            if self.board:isColliding(nil, self.x+j) then break end
             self.lastAction = 'move'
             self:sound('move')
         end

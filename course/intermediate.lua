@@ -152,6 +152,24 @@ return {
                     love.graphics.draw(gfx.mihara, 50, (math.sin((gamestate.time+5258) * 4) * 800))
                 end
             end
+        },
+        {
+            {
+                "So, the Roll-Roll stage was a bit of a foreshadowing.\n",
+                "[smug]Reversal time!!"
+            },
+            objective = "Clear 10 lines!",
+            update = function(self, dt)
+                if gamestate.lines >= 10 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%d/10"):format(gamestate.lines)
+            end,
+            postInit = function(self, gs)
+                gs.lrReverse = true
+            end
         }
     }
 }
