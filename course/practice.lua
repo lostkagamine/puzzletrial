@@ -5,7 +5,7 @@ return {
     stages = {
         {
             objective = "Practice!",
-            rotation = "prs",
+            rotation = "psrs",
             getGoalText = function(self)
                 return tostring(gamestate.lines)
             end,

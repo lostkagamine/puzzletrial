@@ -301,7 +301,7 @@ return {
         local piece = gamestate.piece.name
         if lines > 0 then
             local names = {
-                'Single', 'Double', 'Triple', 'Quad'
+                'Single', 'Double', 'Triple', 'Quad', 'Quint'
             }
             local n = names[lines]
             local t = ''
