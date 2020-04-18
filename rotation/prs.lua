@@ -104,7 +104,7 @@ ars.colours = {
 
 function ars.wallkick(piecest, a, b)
     local kicks = {{0, 0}, {1, 0}, {-1, 0}, {0, -1}, {0, 1}, {-1, 1}, {1, 1}, {-1, -1}, {1, -1}}
-    for i=0,2 do
+    for i=0,5 do
         for _, j in ipairs(kicks) do
             local nx, ny = gamestate.x, gamestate.y
             nx = nx + (j[1] + i)
