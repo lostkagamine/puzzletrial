@@ -143,7 +143,7 @@ end
 
 function startstage(number, noswitch)
     if not stages[number] then
-        return
+        return false
     end
 
     stage = stages[number]
@@ -158,6 +158,8 @@ function startstage(number, noswitch)
     if not noswitch then
         switchstate('game')
     end
+
+    return true
 end
 
 function love.load()

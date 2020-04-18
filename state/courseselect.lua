@@ -16,8 +16,10 @@ end)
 for i, j in pairs(h) do
     table.insert(menu, {j.name, function()
         loadcourse(j.id)
-        playmusic(j.music or 'level1')
-        startstage(st)
+        local f = startstage(st)
+        if f then
+            playmusic(j.music or 'level1')
+        end
     end})
 end
 

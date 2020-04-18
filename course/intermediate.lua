@@ -193,6 +193,26 @@ return {
                 gs.delays.das = 16 * (1/60)
                 gs.delays.arr = 6 * (1/60)
             end
+        },
+        {
+            {
+                "[happy]And so, you made it.",
+                "This is the end of the Intermediate Course.",
+                "[smug]...But there's one final level to get through!",
+                "[happy]Show me what you can do!!!"
+            },
+            objective = "Clear 40 lines\nwithin 100 sec.!",
+            update = function(self, dt)
+                if gamestate.time >= 100 then
+                    gamestate:gameOver()
+                end
+                if gamestate.lines >= 40 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%s/40"):format(gamestate.lines)
+            end
         }
     }
 }
