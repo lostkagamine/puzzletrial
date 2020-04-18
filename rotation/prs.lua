@@ -103,14 +103,26 @@ ars.colours = {
 }
 
 function ars.wallkick(piecest, a, b)
-    local kicks = {{0, 0}, {1, 0}, {-1, 0}, {0, -1}, {0, 1}, {-1, 1}, {1, 1}, {-1, -1}, {1, -1}}
-    for i=0,5 do
-        for _, j in ipairs(kicks) do
-            local nx, ny = gamestate.x, gamestate.y
-            nx = nx + (j[1] + i)
-            ny = ny + (j[2] + i)
-            if not gamestate.board:isColliding(piecest, nx, ny) then
-                return false, j[1]+i, j[2]+i
+    for y=0,5,1 do
+        local nx, ny = gamestate.x, gamestate.y
+        ny = ny + y
+        if not gamestate.board:isColliding(piecest, nil, ny) then
+            return false, 0, y
+        end
+        for x=0,5 do
+            local nx2, ny2 = gamestate.x, gamestate.y
+            nx2 = nx2 - x
+            ny2 = ny2 + y
+            if not gamestate.board:isColliding(piecest, nx2, ny2) then
+                return false, -x, y
+            end
+        end
+        for x=0,5 do
+            local nx2, ny2 = gamestate.x, gamestate.y
+            nx2 = nx2 + x
+            ny2 = ny2 + y
+            if not gamestate.board:isColliding(piecest, nx2, ny2) then
+                return false, x, y
             end
         end
     end
