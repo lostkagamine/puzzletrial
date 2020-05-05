@@ -3,6 +3,7 @@ local menu = {
         switchstate('courseselect')
     end},
     {'Key config', function() switchstate('keyconfig') end},
+    {'Credits', function() switchstate('credits') end},
     {'Quit', function() love.event.quit() end}
 }
 

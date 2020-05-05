@@ -19,9 +19,11 @@ return {
     on = function(self)
         stopmusic()
         playmusic('credits')
+        self.position = love.timer.getTime()
     end,
     draw = function(self)
         love.graphics.setFont(font.reg2)
+        love.graphics.print(text, 20, 600 - ((self.position - love.timer.getTime()) * font.reg2:getHeight('h')*1.5)*-1)
     end,
     keydown = function(self, k)
         if k == 'escape' then stopmusic() switchstate('title') end

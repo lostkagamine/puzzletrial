@@ -71,6 +71,7 @@ function playmusic(name)
 end
 
 function stopmusic()
+    if not isplaying then return end
     isplaying:stop()
 end
 
@@ -132,8 +133,10 @@ function switchstate(t)
     if cstate and cstate.on then cstate:on() end
     cstate_name = t
     sh_time = love.timer.getTime()
-    videoplaying:pause()
-    videoplaying:rewind()
+    if videoplaying then
+        videoplaying:pause()
+        videoplaying:rewind()
+    end
     videoplaying = nil
 end
 
