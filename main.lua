@@ -132,6 +132,8 @@ function switchstate(t)
     if cstate and cstate.on then cstate:on() end
     cstate_name = t
     sh_time = love.timer.getTime()
+    videoplaying:pause()
+    videoplaying:rewind()
     videoplaying = nil
 end
 
