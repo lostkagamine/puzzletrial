@@ -1,14 +1,13 @@
 require('util')
 
 local c = {
-    I = hue(0),
+    I = hue(180),
     J = hue(240),
     L = hue(30),
-    T = hue(180),
-    S = hue(300),
-    Z = hue(120),
-    O = hue(60),
-    FLAT = {1, 1, 1, 1}
+    T = hue(270),
+    S = hue(120),
+    Z = hue(0),
+    O = hue(60)
 }
 
 local o = [[piececolours = {

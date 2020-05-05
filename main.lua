@@ -99,6 +99,10 @@ charasprites = {
     annoyed = love.graphics.newImage('data/character/annoyed.png')
 }
 
+fmv = {
+    ronaldinho = love.graphics.newVideo('data/fmv/ronaldinho.ogv')
+}
+
 settings = {
     drawNext = 3
 }
@@ -118,6 +122,9 @@ local oldver = false
 
 screen_cvs = nil
 
+videoplaying = nil
+local vc = love.graphics.newCanvas()
+
 function switchstate(t)
     if not states[t] then return end
     if cstate and cstate.off then cstate:off() end
@@ -125,6 +132,7 @@ function switchstate(t)
     if cstate and cstate.on then cstate:on() end
     cstate_name = t
     sh_time = love.timer.getTime()
+    videoplaying = nil
 end
 
 function enableshader(n)
@@ -235,6 +243,10 @@ function love.load()
     end
 
     switchstate('title')
+
+    if cstate.doneLoading then
+        cstate:doneLoading()
+    end
 end
 
 function love.update(dt)
@@ -247,6 +259,10 @@ function love.update(dt)
     if cur_shader and cur_shader:hasUniform('u_time') then
         local t = love.timer.getTime() - sh_time
         cur_shader:send('u_time', t)
+    end
+
+    if videoplaying and not videoplaying:isPlaying() then
+        videoplaying:pause()
     end
 end
 
@@ -283,9 +299,27 @@ or press [ESCAPE] to quit.]], 20, 80)
 
     love.graphics.setBlendMode('alpha', 'premultiplied')
 
+    love.graphics.setColor(1, 1, 1)
     love.graphics.draw(screen_cvs)
 
+
     love.graphics.setBlendMode('alpha')
+
+    if videoplaying then
+        love.graphics.setCanvas(vc)
+        love.graphics.draw(videoplaying)
+        love.graphics.setCanvas()
+        love.graphics.setBlendMode('alpha', 'premultiplied')
+        love.graphics.setShader(shaders.chroma)
+        shaders.chroma:send('pos', videoplaying:tell())
+        shaders.chroma:send('playing', videoplaying:isPlaying())
+        love.graphics.draw(vc)
+        love.graphics.setBlendMode('alpha')
+    end
+    --love.graphics.present()
+
+    love.graphics.setShader()
+
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(font.reg)
