@@ -47,5 +47,8 @@ return {
         if k == 'return' then
             menu[selection][2]()
         end
+        if k == 'o' then
+            error('testing')
+        end
     end
 }

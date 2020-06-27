@@ -1,4 +1,4 @@
-_GAME_VERSION = 'preview'
+_GAME_VERSION = '1.0.0a'
 
 game = {}
 
