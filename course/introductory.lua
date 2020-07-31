@@ -1,6 +1,5 @@
 return {
     name = "Introductory Course",
-    id = "introductory",
     stages = {
         {
             {

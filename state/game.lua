@@ -21,7 +21,7 @@ return {
         self.currtext = {}
         self.texttime = 0
         self.fieldCanvas = love.graphics.newCanvas()
-        if nodialogue == true or not stage[1] then
+        if nodialogue == true or not stage[1] or game.speedrunmode then
             inDialogue = false
             self.isCountingDown = true
         else
@@ -183,6 +183,12 @@ return {
         local tex = string.format('%02d:%02d.%02d', math.floor(gamestate.time / 60), math.floor(math.fmod(gamestate.time, 60)), math.floor((gamestate.time*100)%100))
         love.graphics.print(tex, fieldRight + padding, fieldBottom - height(tex))
 
+        if game.speedrunmode then
+            local st = love.timer.getTime() - game.speedruntimer
+            local stex = string.format('%02d:%02d.%02d', math.floor(st / 60), math.floor(math.fmod(st, 60)), math.floor((st*100)%100))
+            love.graphics.print(stex, fieldRight + padding + width(stex) + 50, fieldBottom - height(tex))
+        end
+
         if stage.getGoalText then
             local gt = stage:getGoalText()
             love.graphics.setColor(1, 1, 1, 1)
@@ -289,6 +295,13 @@ return {
             enableshader()
             startstage(stageno, true)
         end
+
+        if not RELEASE and k == 'tab' and game.speedrunmode then
+            game.speedrunfinaltime = love.timer.getTime() - game.speedruntimer
+            switchstate('speedrunend')
+            stopmusic()
+            return
+        end
         
         if k == 'return' and gamestate.stageClear then
             enableshader()
@@ -296,6 +309,25 @@ return {
                 -- end of game
                 game.save.cleared[currcourse.id] = true
                 saveFile()
+                if game.speedrunmode then
+                    local next = {
+                        introductory = 'intermediate',
+                        intermediate = 'advanced',
+                        advanced = 'credits'
+                    }
+                    local n = next[currcourse.id]
+                    if n == 'credits' then
+                        game.speedrunfinaltime = love.timer.getTime() - game.speedruntimer
+                        switchstate('speedrunend')
+                        stopmusic()
+                        return
+                    end
+                    loadcourse(n)
+                    stopmusic()
+                    playmusic(currcourse.music or 'level1')
+                    startstage(1)
+                    return
+                end
                 switchstate('credits')
                 return
             end

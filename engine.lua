@@ -572,13 +572,13 @@ function Game:nextPiece(held)
         self:hold()
     end
 
-    if input:down('rotateLeft') then
-        self:rotate(-1)
-        self:sound('rotate')
-    elseif input:down('rotateRight') then
-        self:rotate(1)
-        self:sound('rotate')
-    end
+    -- if input:down('rotateLeft') then
+    --     self:rotate(-1)
+    --     self:sound('rotate')
+    -- elseif input:down('rotateRight') then
+    --     self:rotate(1)
+    --     self:sound('rotate')
+    -- end
 
     if self.board:isColliding() then
         -- game over

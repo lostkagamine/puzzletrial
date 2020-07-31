@@ -1,4 +1,4 @@
-_GAME_VERSION = '1.0.0'
+_GAME_VERSION = '1.1.0'
 
 game = {}
 
@@ -125,6 +125,10 @@ local oldver = false
 
 screen_cvs = nil
 
+game.speedrunmode = false
+game.speedruntimer = 0
+game.speedrunfinaltime = 0
+
 videoplaying = nil
 local vc = love.graphics.newCanvas()
 
@@ -224,6 +228,11 @@ function love.load()
     if love.filesystem.getInfo('save.json') then
         local data = json.decode(love.filesystem.read('save.json'))
         game.save = data
+
+        if not game.save.speedrunTime then
+            game.save.speedrunTime = -1
+            saveFile()
+        end
     else
         game.save = {
             cleared = {
@@ -231,7 +240,8 @@ function love.load()
                 intermediate = false,
                 advanced = false,
                 grandmaster = false
-            }
+            },
+            speedrunTime = -1
         }
 
         saveFile()

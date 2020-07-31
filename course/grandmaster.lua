@@ -1,6 +1,5 @@
 return {
     name = "Grand Master Course",
-    id = "grandmaster",
     music = "level4",
     sort = 5,
     hideUntilUnlock = true,
@@ -10,9 +9,9 @@ return {
                 "[happy]Here it is!! The final challenge!!",
                 "[happy]You've done well to get this far, so give it your all!"
             },
-            objective = "Clear 40 lines\nwithin 45 sec.!",
+            objective = "Clear 40 lines\nwithin 50 sec.!",
             update = function(self, dt)
-                if gamestate.time >= 45 then
+                if gamestate.time >= 50 then
                     gamestate:gameOver()
                 end
                 if gamestate.lines >= 40 then

@@ -47,7 +47,7 @@ return {
         if k == 'return' then
             menu[selection][2]()
         end
-        if k == 'o' then
+        if k == 'o' and not RELEASE then
             error('testing')
         end
     end

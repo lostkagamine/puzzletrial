@@ -1,6 +1,5 @@
 return {
     name = "Advanced Course",
-    id = "advanced",
     music = "level3",
     sort = 2,
     stages = {
@@ -97,9 +96,9 @@ return {
             {
                 "[happy]Time to kick your speed into overdrive!"
             },
-            objective = "Clear 40 lines\nwithin 55 sec.!",
+            objective = "Clear 40 lines\nwithin 60 sec.!",
             update = function(self, dt)
-                if gamestate.time >= 55 then
+                if gamestate.time >= 60 then
                     gamestate:gameOver()
                 end
                 if gamestate.lines >= 40 then

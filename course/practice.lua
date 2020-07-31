@@ -1,6 +1,5 @@
 return {
     name = "Practice Mode",
-    id = "practice",
     music = "level1",
     unlisted = true,
     sort = 10,

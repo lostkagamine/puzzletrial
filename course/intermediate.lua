@@ -1,6 +1,5 @@
 return {
     name = "Intermediate Course",
-    id = "intermediate",
     music = "level2",
     sort = 1,
     stages = {
