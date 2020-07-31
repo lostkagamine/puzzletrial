@@ -1,4 +1,4 @@
-_GAME_VERSION = '1.0.0-pre-rc1'
+_GAME_VERSION = '1.0.0'
 
 game = {}
 
@@ -269,7 +269,7 @@ function love.load()
         end
     end
 
-    switchstate('title')
+    switchstate('warning')
 
     if cstate.doneLoading then
         cstate:doneLoading()

@@ -1,19 +1,48 @@
-local text = [[- Puzzle Trial -
+local text = ([[--- Puzzle Trial ---
 
-Programming by Rin.
+Programming
+Background art
+Game design
+Shader programming
+Course design
 
-Character art by @cloverkomaeda@twitter.com.
+by
+Rin
 
-Background music by Hurt Record.
+Uses boipushy input library
 
-- Special thanks -
+Character art by @cloverkomaeda on Twitter
+
+Background music provided by Hurt Record
+https://www.hurtrecord.com
+
+
+
+Thank you for playing my first full release.
+It really means a lot to me
+that someone would check this game out.
+
+
+
+Special thanks
 Oshisaure
-0xFC
-LewisTehMinerz
-NoraVR
+0xFC963F18DC21
 
-My hopes are to see this game become a fully-featured game.
-Until then, have this text.]]
+Inspired by
+A Gnowius' Challenge
+by Oshisaure
+
+
+
+
+
+%s
+
+
+Press [ESCAPE] to return to the title screen.]]):format(
+    (game.save.cleared.grandmaster) and 'Congratulations on completing the final challenge.\nYou have truly mastered this game.' or (
+    (game.save.cleared.intermediate and game.save.cleared.advanced and game.save.cleared.introductory) and 'The final challenge is now open to play.\nGo to the Course Select screen.' or '')
+)
 
 return {
     on = function(self)

@@ -76,3 +76,7 @@ end
 function is_computer_on_fire()
     return false
 end
+
+function round(num, numDecimalPlaces)
+    return (string.format("%." .. (numDecimalPlaces or 0) .. "f", num))
+end
