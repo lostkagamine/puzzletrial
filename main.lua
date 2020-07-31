@@ -10,8 +10,6 @@ require "util"
 require "engine"
 inspect = require "lib/inspect"
 
-moonshine = require 'moonshine'
-
 local json = require "lib/json"
 
 stage = nil
@@ -59,6 +57,8 @@ game.clear = RepeatableSound.static.buildTable({
 game.bgm = {}
 game.bgm.level1 = love.audio.newSource('data/bgm/mirai_ha_sodotteru.mp3', 'stream')
 game.bgm.level2 = love.audio.newSource('data/bgm/information_source.mp3', 'stream')
+game.bgm.level3 = love.audio.newSource('data/bgm/lumiere.mp3', 'stream')
+game.bgm.level4 = love.audio.newSource('data/bgm/beat_noise.mp3', 'stream')
 game.bgm.credits = love.audio.newSource('data/bgm/sudden_events.mp3', 'stream')
 local isplaying = nil
 

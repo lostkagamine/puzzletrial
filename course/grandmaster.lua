@@ -1,7 +1,7 @@
 return {
     name = "Grand Master Course",
     id = "grandmaster",
-    music = "level2",
+    music = "level4",
     sort = 5,
     hideUntilUnlock = true,
     stages = {

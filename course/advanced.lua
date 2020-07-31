@@ -1,7 +1,7 @@
 return {
     name = "Advanced Course",
     id = "advanced",
-    music = "level2",
+    music = "level3",
     sort = 2,
     stages = {
         {
