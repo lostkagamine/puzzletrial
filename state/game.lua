@@ -294,6 +294,8 @@ return {
             enableshader()
             if not stages[stageno+1] then
                 -- end of game
+                game.save.cleared[currcourse.id] = true
+                saveFile()
                 switchstate('credits')
                 return
             end

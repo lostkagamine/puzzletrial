@@ -1,15 +1,15 @@
 return {
     name = "Introductory Course",
+    id = "introductory",
     stages = {
         {
             {
-                "[happy]So! Welcome to this game. Press the long bar on the keyboard\nto advance dialogue.",
+                "[happy]So! Welcome to Puzzle Trial's full release!\nPress the long bar on the keyboard\nto advance dialogue.",
                 "My name is Rin and I\'ll be your host for tonight.",
                 "If you've ever heard of a little game called Tetris,\nit's kinda like that.",
                 "Blocks will fall from the top of the screen,\nand YOU have to arrange them so\nthat they form complete lines.",
                 "It's simple, really.",
                 "Oh, also, don't let the blocks stack all the way up.\nBad things will happen.",
-                "Do keep in mind that this is a demo, and as such\nit won't have much content.",
                 "You might also run into some... surprises.",
                 "[annoyed]...",
                 "[smug]You'll see what I mean later on.",

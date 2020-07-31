@@ -1,5 +1,6 @@
 return {
     name = "Intermediate Course",
+    id = "intermediate",
     music = "level2",
     sort = 1,
     stages = {
@@ -94,15 +95,13 @@ return {
                 "Advanced techniques return in this advanced stage!",
                 "Let's do some T-Triples!"
             },
-            objective = "Do 5 T-Spin Triples\nin a row!",
+            objective = "Do 5 T-Spin Triples!",
             postInit = function(self, gs)
                 self.b2bs = 0
             end,
             onClear = function(self, lines, spin, mini)
                 if lines == 3 and spin then -- I have no idea how you'd do a mini-t-triple but
                     self.b2bs = self.b2bs + 1
-                elseif lines ~= 0 and not spin then
-                    self.b2bs = 0
                 end
                 if self.b2bs >= 5 then
                     gamestate:signalClear()
@@ -130,27 +129,6 @@ return {
             end,
             getGoalText = function(self)
                 return ("%d/2"):format(self.pcs)
-            end
-        },
-        {
-            {
-                "[annoyed]I'm sorry, Mihara."
-            },
-            objective = "Clear 10 lines!",
-            update = function(self, dt)
-                if gamestate.lines >= 10 then
-                    gamestate:signalClear()
-                end
-            end,
-            getGoalText = function(self)
-                return ("%d/10"):format(gamestate.lines)
-            end,
-            draw = function(self)
-                if gamestate.running then
-                    love.graphics.draw(gfx.mihara, 50, (math.sin(gamestate.time * 4) * 800))
-                    love.graphics.draw(gfx.mihara, 50, (math.sin((gamestate.time+2) * 4) * 800))
-                    love.graphics.draw(gfx.mihara, 50, (math.sin((gamestate.time+5258) * 4) * 800))
-                end
             end
         },
         {
@@ -192,6 +170,23 @@ return {
                 gs.delays.clear = 18 * (1/60)
                 gs.delays.das = 16 * (1/60)
                 gs.delays.arr = 6 * (1/60)
+            end
+        },
+        {
+            {
+                "Cool! Clear 25 lines in max gravity."
+            },
+            objective = "Clear 25 lines!",
+            update = function(self, dt)
+                if gamestate.lines >= 25 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%d/25"):format(gamestate.lines)
+            end,
+            postInit = function(self, gs)
+                gs.delays.gravity = 20
             end
         },
         {

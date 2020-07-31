@@ -86,7 +86,7 @@ return {
         end
         if k == 'escape' then
             love.filesystem.write('keys.json', json.encode(input.binds))
-            switchstate('title')
+            switchstate('options')
         end
     end
 }

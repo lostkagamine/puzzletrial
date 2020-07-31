@@ -1,5 +1,6 @@
 return {
     name = "Advanced Course",
+    id = "advanced",
     music = "level2",
     sort = 2,
     stages = {
@@ -7,7 +8,7 @@ return {
             {
                 "Welcome to the Advanced Course!",
                 "[happy]I'll start you off with something nice.",
-                "[smug]...oh, yeah, there will be memes."
+                "[smug]Can you play invisible?"
             },
             objective = "Clear 5 lines!",
             postInit = function(self, gs)
@@ -15,9 +16,11 @@ return {
             end,
             update = function(self, dt)
                 if gamestate.lines >= 5 then
-                    stopmusic()
-                    fmv.ronaldinho:play()
-                    videoplaying = fmv.ronaldinho
+                    if love.math.random(1, 100) <= 5 then
+                        stopmusic()
+                        fmv.ronaldinho:play()
+                        videoplaying = fmv.ronaldinho
+                    end
                     gamestate:signalClear()
                 end
             end,
@@ -27,15 +30,13 @@ return {
         },
         {
             {
-                "I'm really sorry about that last one!",
-                "[smug]...but I just had to, didn't I?",
-                "[happy]Either way, invisible mode is pretty fun, isn't it?",
+                "[happy]Invisible mode is pretty fun, isn't it?",
                 "[smug]Show me what you've got!"
             },
             objective = "Clear 10 lines!",
             postInit = function(self, gs)
-                playmusic('level2')
                 gs.invisible = true
+                gs.delays.gravity = 3
             end,
             update = function(self, dt)
                 if gamestate.lines >= 10 then
@@ -68,6 +69,66 @@ return {
                 gs.delays.clear = 9 * (1/60)
                 gs.delays.das = 9 * (1/60)
             end
-        }
+        },
+        {
+            {
+                "Hey, you did it!",
+                "[smug]Now do some spins!"
+            },
+            objective = "Do 5 T-Spin Triples\nin a row!",
+            postInit = function(self, gs)
+                self.b2bs = 0
+            end,
+            onClear = function(self, lines, spin, mini)
+                if lines == 3 and spin then -- I have no idea how you'd do a mini-t-triple but
+                    self.b2bs = self.b2bs + 1
+                elseif lines ~= 0 and not spin then
+                    self.b2bs = 0
+                end
+                if self.b2bs >= 5 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%d/5"):format(self.b2bs)
+            end
+        },
+        {
+            {
+                "[happy]Time to kick your speed into overdrive!"
+            },
+            objective = "Clear 40 lines\nwithin 55 sec.!",
+            update = function(self, dt)
+                if gamestate.time >= 55 then
+                    gamestate:gameOver()
+                end
+                if gamestate.lines >= 40 then
+                    gamestate:signalClear()
+                end
+            end,
+            getGoalText = function(self)
+                return ("%s/40"):format(gamestate.lines)
+            end
+        },
+        {
+            {
+                "NES mode returns, clear a Quad!"
+            },
+            objective = "Clear a Quad!",
+            onClear = function(self, lines, spin, mini)
+                if lines >= 4 then
+                    gamestate:signalClear()
+                end
+            end,
+            postInit = function(self, gs)
+                gs.delays.gravity = 1/3
+                gs.delays.lock = 0
+                gs.delays.are = 18 * (1/60)
+                gs.delays.lineare = 24 * (1/60)
+                gs.delays.clear = 18 * (1/60)
+                gs.delays.das = 16 * (1/60)
+                gs.delays.arr = 6 * (1/60)
+            end
+        },
     }
 }

@@ -1,37 +1,38 @@
 return {
     name = "Grand Master Course",
+    id = "grandmaster",
     music = "level2",
     sort = 5,
-    unlisted = true,
+    hideUntilUnlock = true,
     stages = {
         {
             {
                 "[happy]Here it is!! The final challenge!!",
                 "[happy]You've done well to get this far, so give it your all!"
             },
-            objective = "Clear 35 lines\nwithin 50 sec.!",
+            objective = "Clear 40 lines\nwithin 45 sec.!",
             update = function(self, dt)
-                if gamestate.time >= 50 then
+                if gamestate.time >= 45 then
                     gamestate:gameOver()
                 end
-                if gamestate.lines >= 35 then
+                if gamestate.lines >= 40 then
                     gamestate:signalClear()
                 end
             end,
             getGoalText = function(self)
-                return ("%s/35"):format(gamestate.lines)
+                return ("%s/40"):format(gamestate.lines)
             end
         },
         {
-            objective = "Survive for 30 seconds!",
+            objective = "Survive for 20 seconds!",
             update = function(self, dt)
-                if gamestate.time >= 30 then
+                if gamestate.time >= 20 then
                     gamestate:signalClear()
                 end
             end,
             postInit = function(self, gs)
                 gs.delays.gravity = math.huge
-                gs.delays.lock = 12 * (1/60)
+                gs.delays.lock = 8 * (1/60)
                 gs.delays.are = 6 * (1/60)
                 gs.delays.lineare = 5 * (1/60)
                 gs.delays.clear = 3 * (1/60)

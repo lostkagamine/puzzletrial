@@ -1,4 +1,4 @@
-_GAME_VERSION = '1.0.0a'
+_GAME_VERSION = '1.0.0-pre-rc1'
 
 game = {}
 
@@ -43,6 +43,8 @@ game.repeatsfx = {}
 for i, j in pairs(game.sfx) do
     game.repeatsfx[i] = RepeatableSound:new(j)
 end
+
+game.save = {}
 
 game.combo = {}
 for i=1,15 do
@@ -175,6 +177,10 @@ function startstage(number, noswitch)
     return true
 end
 
+function saveFile()
+    love.filesystem.write('save.json', json.encode(game.save))
+end
+
 function love.load()
     local maj, min, rev, cod = love.getVersion()
     if maj < 11 then
@@ -213,6 +219,22 @@ function love.load()
                 end
             end
         end
+    end
+
+    if love.filesystem.getInfo('save.json') then
+        local data = json.decode(love.filesystem.read('save.json'))
+        game.save = data
+    else
+        game.save = {
+            cleared = {
+                introductory = false,
+                intermediate = false,
+                advanced = false,
+                grandmaster = false
+            }
+        }
+
+        saveFile()
     end
 
     local e = love.filesystem.getDirectoryItems('rotation/')

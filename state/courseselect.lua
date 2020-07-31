@@ -4,7 +4,7 @@ local st = 1
 local h = {}
 for i, j in pairs(courselist) do
     j.id = i
-    if not j.unlisted then
+    if not j.unlisted and not j.hideUntilUnlock or (j.hideUntilUnlock and (game.save.cleared.intermediate and game.save.cleared.introductory and game.save.cleared.advanced)) then
         table.insert(h, j)
     end
 end
@@ -20,21 +20,23 @@ for i, j in pairs(h) do
         if f then
             playmusic(j.music or 'level1')
         end
-    end})
+    end, j.id})
 end
 
-table.insert(menu, {'Debug stage select',
-left=function()
-    st = st - 1
-    if st<1 then
-        st=1
-    end
-end,
-right=function()
-    st = st + 1
-end, value = function()
-    return "Debug stage select: "..st
-end})
+if not RELEASE then
+    table.insert(menu, {'Debug stage select',
+    left=function()
+        st = st - 1
+        if st<1 then
+            st=1
+        end
+    end,
+    right=function()
+        st = st + 1
+    end, value = function()
+        return "Debug stage select: "..st
+    end})
+end
 
 local selection = 1
 
@@ -50,6 +52,8 @@ return {
             love.graphics.setFont(font.menu)
             if selection == i then
                 love.graphics.setColor(0.1, 1, 0.1)
+            elseif game.save.cleared[j[3]] then
+                love.graphics.setColor(252/255, 177/255, 3/255)
             else
                 love.graphics.setColor(1, 1, 1)
             end

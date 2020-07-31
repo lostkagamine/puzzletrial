@@ -72,3 +72,7 @@ end
 function ternary(c, a, b)
     if c then return a else return b end
 end
+
+function is_computer_on_fire()
+    return false
+end

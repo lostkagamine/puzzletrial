@@ -34,11 +34,13 @@ Ver. %s
 
 Love2D %d.%d.%d "%s"
 on "%s" (%s, %d processors)
+On fire? %s
 
 Technical information below.
 
 %s]]):format(_GAME_VERSION, it,
             maj, min, patch, codename, love.system.getOS(), jit.arch, love.system.getProcessorCount(),
+            is_computer_on_fire() and 'yes' or 'no',
             err)
     print(report)
 

@@ -2,7 +2,7 @@ local menu = {
     {'Start game', function()
         switchstate('courseselect')
     end},
-    {'Key config', function() switchstate('keyconfig') end},
+    {'Options', function() switchstate('options') end},
     {'Credits', function() switchstate('credits') end},
     {'Quit', function() love.event.quit() end}
 }
