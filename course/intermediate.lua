@@ -77,16 +77,30 @@ return {
                 "...Should I have done this?"
             },
             objective = "Clear 10 lines!",
+            postInit = function(self)
+                self.timer = 0
+                self.started = false
+            end,
             onStart = function(self)
+                self.started = true
+                currentEffect = effects.vhs
                 enableshader('fuck')
             end,
             update = function(self, dt)
                 if gamestate.lines >= 10 then
                     gamestate:signalClear()
                 end
+                self.timer = self.timer + dt
             end,
             getGoalText = function(self)
                 return ("%d/10"):format(gamestate.lines)
+            end,
+            draw = function(self)
+                if not self.started then return end
+                love.graphics.setFont(font.big)
+                if math.fmod(self.timer, 2) < 0.5 then
+                    love.graphics.print("TRACK", 20, 20)
+                end
             end
         },
         {
@@ -195,9 +209,9 @@ return {
                 "[smug]...But there's one final level to get through!",
                 "[happy]Show me what you can do!!!"
             },
-            objective = "Clear 40 lines\nwithin 100 sec.!",
+            objective = "Clear 40 lines\nwithin 120 sec.!",
             update = function(self, dt)
-                if gamestate.time >= 100 then
+                if gamestate.time >= 120 then
                     gamestate:gameOver()
                 end
                 if gamestate.lines >= 40 then

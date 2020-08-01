@@ -32,20 +32,26 @@ Inspired by
 A Gnowius' Challenge
 by Oshisaure
 
-
+Additional shader programming by
+the Moonshine developers
 
 
 
 %s
 
 
-Press [ESCAPE] to return to the title screen.]]):format(
-    (game.save.cleared.grandmaster) and 'Congratulations on completing the final challenge.\nYou have truly mastered this game.' or (
-    (game.save.cleared.intermediate and game.save.cleared.advanced and game.save.cleared.introductory) and 'The final challenge is now open to play.\nGo to the Course Select screen.' or '')
-)
+Press [ESCAPE] to return to the title screen.]])
+
+local function h()
+    text = text:format(
+        (game.save.cleared.grandmaster) and 'Congratulations on completing the final challenge.\nYou have truly mastered this game.' or (
+        (game.save.cleared.intermediate and game.save.cleared.advanced and game.save.cleared.introductory) and 'The final challenge is now open to play.\nGo to the Course Select screen.' or '')
+    )
+end
 
 return {
     on = function(self)
+        h()
         stopmusic()
         playmusic('credits')
         self.position = love.timer.getTime()

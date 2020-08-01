@@ -1,4 +1,4 @@
-_GAME_VERSION = '1.1.0'
+_GAME_VERSION = '1.2.0'
 
 game = {}
 
@@ -9,6 +9,8 @@ require "repeatsounds"
 require "util"
 require "engine"
 inspect = require "lib/inspect"
+
+moonshine = require "moonshine"
 
 local json = require "lib/json"
 
@@ -134,6 +136,7 @@ local vc = love.graphics.newCanvas()
 
 function switchstate(t)
     if not states[t] then return end
+    currentEffect = noEffect
     if cstate and cstate.off then cstate:off() end
     cstate = states[t]
     if cstate and cstate.on then cstate:on() end
@@ -185,6 +188,16 @@ function saveFile()
     love.filesystem.write('save.json', json.encode(game.save))
 end
 
+function noEffect(x)
+    x()
+end
+
+currentEffect = noEffect
+
+effects = {
+    vhs = nil
+}
+
 function love.load()
     local maj, min, rev, cod = love.getVersion()
     if maj < 11 then
@@ -192,6 +205,9 @@ function love.load()
         return
     end
     
+    effects.vhs = moonshine(moonshine.effects.scanlines).chain(moonshine.effects.crt)
+    effects.vhs.scanlines.opacity = 0.7
+
     screen_cvs = love.graphics.newCanvas()
 
     input = Input()
@@ -279,7 +295,9 @@ function love.load()
         end
     end
 
-    switchstate('warning')
+    if RELEASE then
+        switchstate('warning')
+    else switchstate('title') end
 
     if cstate.doneLoading then
         cstate:doneLoading()
@@ -304,9 +322,11 @@ function love.update(dt)
 end
 
 function love.draw()
-    
+
     love.graphics.setShader()
     love.graphics.clear()
+
+    
     if oldver then
         love.graphics.setFont(font.big)
         love.graphics.print('OLD VERSION', 20, 20)
@@ -322,23 +342,24 @@ or press [ESCAPE] to quit.]], 20, 80)
     love.graphics.setCanvas({screen_cvs, stencil=true, depth=true})
     love.graphics.clear()
     love.graphics.setBlendMode('alpha')
-    
+
     if cstate and cstate.draw then
         cstate:draw()
     end
 
     love.graphics.setCanvas()
+    love.graphics.setBlendMode('alpha', 'premultiplied')
+
     if cur_shader then
         love.graphics.setShader(cur_shader)
     else
         love.graphics.setShader() 
     end
 
-    love.graphics.setBlendMode('alpha', 'premultiplied')
-
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.draw(screen_cvs)
-
+    currentEffect(function()
+        love.graphics.setColor(1, 1, 1)
+        love.graphics.draw(screen_cvs)
+    end)
 
     love.graphics.setBlendMode('alpha')
 

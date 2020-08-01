@@ -521,6 +521,7 @@ function Game:shiftDownTimer(dt)
 end
 
 function Game:harddrop()
+    if not self.piece.active then return end -- fix bug
     if not self.board:isColliding(nil, nil, self.y+1) then
         self.lastAction = 'drop'
         self.y = self:findLowestY()

@@ -32,18 +32,18 @@ return {
                 "[happy]Invisible mode is pretty fun, isn't it?",
                 "[smug]Show me what you've got!"
             },
-            objective = "Clear 10 lines!",
+            objective = "Clear 15 lines!",
             postInit = function(self, gs)
                 gs.invisible = true
                 gs.delays.gravity = 3
             end,
             update = function(self, dt)
-                if gamestate.lines >= 10 then
+                if gamestate.lines >= 15 then
                     gamestate:signalClear()
                 end
             end,
             getGoalText = function(self)
-                return gamestate.lines.."/10"
+                return gamestate.lines.."/15"
             end
         },
         {
@@ -74,7 +74,7 @@ return {
                 "Hey, you did it!",
                 "[smug]Now do some spins!"
             },
-            objective = "Do 5 T-Spin Triples\nin a row!",
+            objective = "Do 3 T-Spin Triples\nin a row!",
             postInit = function(self, gs)
                 self.b2bs = 0
             end,
@@ -84,7 +84,7 @@ return {
                 elseif lines ~= 0 and not spin then
                     self.b2bs = 0
                 end
-                if self.b2bs >= 5 then
+                if self.b2bs >= 3 then
                     gamestate:signalClear()
                 end
             end,
@@ -96,9 +96,9 @@ return {
             {
                 "[happy]Time to kick your speed into overdrive!"
             },
-            objective = "Clear 40 lines\nwithin 60 sec.!",
+            objective = "Clear 40 lines\nwithin 100 sec.!",
             update = function(self, dt)
-                if gamestate.time >= 60 then
+                if gamestate.time >= 80 then
                     gamestate:gameOver()
                 end
                 if gamestate.lines >= 40 then
@@ -106,7 +106,7 @@ return {
                 end
             end,
             getGoalText = function(self)
-                return ("%s/40"):format(gamestate.lines)
+                return ("%s/80"):format(gamestate.lines)
             end
         },
         {

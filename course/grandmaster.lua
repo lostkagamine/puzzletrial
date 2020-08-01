@@ -9,17 +9,17 @@ return {
                 "[happy]Here it is!! The final challenge!!",
                 "[happy]You've done well to get this far, so give it your all!"
             },
-            objective = "Clear 40 lines\nwithin 50 sec.!",
+            objective = "Clear 35 lines\nwithin 60 sec.!",
             update = function(self, dt)
-                if gamestate.time >= 50 then
+                if gamestate.time >= 60 then
                     gamestate:gameOver()
                 end
-                if gamestate.lines >= 40 then
+                if gamestate.lines >= 35 then
                     gamestate:signalClear()
                 end
             end,
             getGoalText = function(self)
-                return ("%s/40"):format(gamestate.lines)
+                return ("%s/35"):format(gamestate.lines)
             end
         },
         {
