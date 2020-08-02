@@ -4,7 +4,7 @@ along with some flashing lights.
 If you're susceptible to epilepsy, or are otherwise
 easily disoriented, please do not play this game.]]
 
-local timerDur = 8
+local timerDur = 10
 
 return {
     on = function(self)
@@ -22,7 +22,7 @@ return {
         love.graphics.print(text, (800/2)-(width(text)/2), (600/4)+50)
         love.graphics.setFont(font.big)
         love.graphics.print('Warning!', (800/2)-(width('Warning!')/2), (600/4)-25)
-        
+
         love.graphics.setFont(font.reg2)
         love.graphics.print(round(timerDur-e, 1), (800/2)-(width('0.0')/2), (600/2)+50)
     end

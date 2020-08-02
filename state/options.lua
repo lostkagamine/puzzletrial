@@ -54,6 +54,7 @@ return {
     end,
     keydown = function(self, k)
         if k == 'down' then
+          game.sfx.cursor:play()
             selection = selection + 1
             if selection > #menu then
                 selection = 1
@@ -61,6 +62,7 @@ return {
             sdSelect = false
         end
         if k == 'up' then
+          game.sfx.cursor:play()
             selection = selection - 1
             if selection < 1 then
                 selection = #menu
@@ -68,6 +70,7 @@ return {
             sdSelect = false
         end
         if k == 'return' then
+          game.sfx.select:play()
             menu[selection][2]()
         end
         if k == 'escape' then

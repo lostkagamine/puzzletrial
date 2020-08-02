@@ -5,6 +5,7 @@ local menu = {
     {'Soft drop', 'softdrop'},
     {'Rotate left', 'rotateLeft'},
     {'Rotate right', 'rotateRight'},
+    {'Rotate 180', 'rotate180'},
     {'Hold piece', 'hold'}
 }
 
@@ -70,18 +71,21 @@ return {
             return
         end
         if k == 'down' then
+          game.sfx.cursor:play()
             selection = selection + 1
             if selection > #menu then
                 selection = 1
             end
         end
         if k == 'up' then
+          game.sfx.cursor:play()
             selection = selection - 1
             if selection < 1 then
                 selection = #menu
             end
         end
         if k == 'return' then
+          game.sfx.select:play()
             currentlyBinding = selection
         end
         if k == 'escape' then

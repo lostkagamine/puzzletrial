@@ -9,6 +9,8 @@ Course design
 by
 Rin
 
+with some sfx and course design by hailey! ^w^
+
 Uses boipushy input library
 
 Character art by @cloverkomaeda on Twitter

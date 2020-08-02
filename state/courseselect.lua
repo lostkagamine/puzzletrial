@@ -16,7 +16,7 @@ function reloadcourselist()
     table.sort(h, function(a, b)
         return (a.sort or 0) < (b.sort or 0)
     end)
-    
+
     for i, j in pairs(h) do
         table.insert(menu, {j.name, function()
             game.speedrunmode = false
@@ -57,7 +57,7 @@ reloadcourselist()
 local selection = 1
 
 return {
-    on = function(self)    
+    on = function(self)
         reloadcourselist()
         selection = 1
         st = 1
@@ -86,18 +86,21 @@ return {
     end,
     keydown = function(self, k)
         if k == 'down' then
+          game.sfx.cursor:play()
             selection = selection + 1
             if selection > #menu then
                 selection = 1
             end
         end
         if k == 'up' then
+          game.sfx.cursor:play()
             selection = selection - 1
             if selection < 1 then
                 selection = #menu
             end
         end
         if k == 'return' and menu[selection][2] then
+          game.sfx.select:play()
             menu[selection][2]()
         end
         if k == 'left' and menu[selection].left then

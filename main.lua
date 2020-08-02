@@ -36,7 +36,9 @@ game.sfx = {
     error = love.audio.newSource('data/sfx/error.mp3', 'static'),
     ready = love.audio.newSource('data/sfx/ready.wav', 'static'),
     go = love.audio.newSource('data/sfx/go.wav', 'static'),
-    spin = love.audio.newSource('data/sfx/spin.wav', 'static')
+    spin = love.audio.newSource('data/sfx/spin.wav', 'static'),
+    cursor = RepeatableSound:new(love.audio.newSource('data/sfx/ui/cursor.wav', 'static')),
+    select = RepeatableSound:new(love.audio.newSource('data/sfx/ui/select.wav', 'static'))
 }
 
 game.repeatsfx = {}
@@ -61,6 +63,7 @@ game.bgm.level1 = love.audio.newSource('data/bgm/mirai_ha_sodotteru.mp3', 'strea
 game.bgm.level2 = love.audio.newSource('data/bgm/information_source.mp3', 'stream')
 game.bgm.level3 = love.audio.newSource('data/bgm/lumiere.mp3', 'stream')
 game.bgm.level4 = love.audio.newSource('data/bgm/beat_noise.mp3', 'stream')
+game.bgm.hailey = love.audio.newSource('data/bgm/hanging_out_in_tokyo.mp3', 'stream')
 game.bgm.credits = love.audio.newSource('data/bgm/sudden_events.mp3', 'stream')
 local isplaying = nil
 
@@ -204,7 +207,7 @@ function love.load()
         oldver = true
         return
     end
-    
+
     effects.vhs = moonshine(moonshine.effects.scanlines).chain(moonshine.effects.crt)
     effects.vhs.scanlines.opacity = 0.7
 
@@ -227,9 +230,10 @@ function love.load()
             right = 'right',
             rotateLeft = {'s', 'f'},
             rotateRight = {'a', 'd'},
+            rotate180 = '',
             hold = 'space'
         }
-        
+
         for i, j in pairs(defaultInputBinding) do
             if type(j) == 'string' then
                 input:bind(j, i)
@@ -326,7 +330,7 @@ function love.draw()
     love.graphics.setShader()
     love.graphics.clear()
 
-    
+
     if oldver then
         love.graphics.setFont(font.big)
         love.graphics.print('OLD VERSION', 20, 20)
@@ -353,7 +357,7 @@ or press [ESCAPE] to quit.]], 20, 80)
     if cur_shader then
         love.graphics.setShader(cur_shader)
     else
-        love.graphics.setShader() 
+        love.graphics.setShader()
     end
 
     currentEffect(function()

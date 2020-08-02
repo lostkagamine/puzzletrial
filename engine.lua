@@ -109,7 +109,7 @@ function Board:serialise()
     local e = self:copy()
     for i=1,#e do
         for j=1,#e[i] do
-            e[i][j] = ternary(i == 0, 0, 1) 
+            e[i][j] = ternary(i == 0, 0, 1)
         end
     end
 end
@@ -179,7 +179,7 @@ function Game:initialize(rotation)
     self.running = false
 
     self.rotation = rotation
-    
+
     self.seed = 0
     self.seed = love.math.random(0,2147483647)
     self.rand = ParkMiller:new(self.seed)
@@ -265,8 +265,12 @@ function Game:update(dt)
         if input:pressed('rotateLeft') then
             self:rotate(-1)
             self:sound('rotate')
-        elseif input:pressed('rotateRight') then
-            self:rotate(1)
+          elseif input:pressed('rotateRight') then
+              self:rotate(1)
+              self:sound('rotate')
+        end
+        if input:pressed('rotate180') then
+            self:rotate(2)
             self:sound('rotate')
         end
         if input:pressed('hold') then
@@ -335,7 +339,7 @@ end
 function Game:doARE(dt)
     if self.clearing then return end
     self.counters.are = self.counters.are - dt
-    if self.counters.are <= 0 and not self.piece.active then 
+    if self.counters.are <= 0 and not self.piece.active then
         self.counters.are = 0
         self:nextPiece()
     end
@@ -412,7 +416,7 @@ function Game:doLockDelay(dt)
     if not self.piece.active then return end
     if self.board:isColliding(nil, nil, self.y+1) then
         self.counters.lock = self.counters.lock + dt
-        if self.counters.lock >= self.delays.lock then 
+        if self.counters.lock >= self.delays.lock then
             self.counters.lock = 0
             self:sound('lock')
             self:lock()
@@ -446,7 +450,7 @@ function Game:lock()
         cstate:onLock()
     end
     self.piece.active = false
-    local spin, mini = self:spinDetect() 
+    local spin, mini = self:spinDetect()
     self:placePieceOnField()
     local lines = self:clearLines()
     self.lines = self.lines + lines

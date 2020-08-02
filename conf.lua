@@ -8,6 +8,10 @@ end
 
 local choices = {
     'fuck',
+    'dammit, hailey!!!!!',
+    'because the world would be dull without error',
+    'but it was me! the crash screen!',
+    'we don\'t make mistakes. we make happy accidents!',
     'turn it off and back on',
     'oops',
     'that\'s unexpected',

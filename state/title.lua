@@ -33,18 +33,21 @@ return {
     end,
     keydown = function(self, k)
         if k == 'down' then
+          game.sfx.cursor:play()
             selection = selection + 1
             if selection > #menu then
                 selection = 1
             end
         end
         if k == 'up' then
+          game.sfx.cursor:play()
             selection = selection - 1
             if selection < 1 then
                 selection = #menu
             end
         end
         if k == 'return' then
+          game.sfx.select:play()
             menu[selection][2]()
         end
         if k == 'o' and not RELEASE then
