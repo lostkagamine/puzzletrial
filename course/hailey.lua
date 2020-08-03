@@ -38,12 +38,36 @@ return {
                 if gamestate.score >= 1000 then
                     gamestate:signalClear()
                 end
-                if gamestate.lines > 10 then
+                if gamestate.lines >= 10 then
                     gamestate:gameOver()
                 end
             end,
             getGoalText = function(self)
                 return gamestate.score .. " | " .. gamestate.lines .. "/10"
+            end
+        },
+        {
+            {
+                "[happy]Pretty cool, huh?",
+                "Singles, doubles and triples give you 100, 200 and 300 points,\nquads give you 500, T-Spins give you a bonus 50\nand mini T-Spins give you a bonus 25!",
+                "[smug]Let's make it a bit trickier now!"
+            },
+            objective = 'Get 2000 points in 5 lines!',
+
+            on = function(self)
+                self.lines = 0
+                self.score = 0
+            end,
+            onClear = function(self, lines, score)
+                if gamestate.score >= 2000 then
+                    gamestate:signalClear()
+                end
+                if gamestate.lines >= 5 then
+                    gamestate:gameOver()
+                end
+            end,
+            getGoalText = function(self)
+                return gamestate.score .. " | " .. gamestate.lines .. "/5"
             end
         },
         {
