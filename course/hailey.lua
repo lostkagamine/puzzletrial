@@ -9,38 +9,41 @@ return {
                 "[smug]Be prepared!!",
 
             },
-            objective = 'Clear 15 lines!',
+            objective = 'Clear 10 lines!',
             rotation = "hairs",
             onClear = function(self, lines, spin, mini)
-                if gamestate.lines >= 15 then
+                if gamestate.lines >= 10 then
                     gamestate:signalClear()
                 end
             end,
             getGoalText = function(self)
-                return gamestate.lines .. '/15'
+                return gamestate.lines .. '/10'
             end
         },
         {
             {
-                "There are also things called T-Spins.",
-                "They're when you rotate the T piece (the purple one)\ninto a hole shaped like a T.",
-                "It's honestly pretty simple, but the rotation system\ncan be fairly weird sometimes.",
-                "[smug]Can you do 5 of them?"
+                "[neutral]Uhhh.....what was that?",
+                "[annoyed]The J, L and O pieces were....",
+                "[happy]Eh, probably just a bug.",
+                "Anyway, onto the next stage!",
+                "[smug]This one has a new type of objective!"
             },
-            objective = 'Perform 5 T-Spins!',
+            objective = 'Get 1000 points in 10 lines!',
+
             on = function(self)
-                self.spins = 0
+                self.lines = 0
+                self.score = 0
             end,
-            onClear = function(self, lines, spin, mini)
-                if spin then
-                    self.spins = self.spins + 1
-                end
-                if self.spins >= 5 then
+            onClear = function(self, lines, score)
+                if gamestate.score >= 1000 then
                     gamestate:signalClear()
+                end
+                if gamestate.lines > 10 then
+                    gamestate:gameOver()
                 end
             end,
             getGoalText = function(self)
-                return self.spins .. '/5'
+                return gamestate.score .. " | " .. gamestate.lines .. "/10"
             end
         },
         {

@@ -196,6 +196,7 @@ function Game:initialize(rotation)
 
     self.infiniteHold = false
 
+    self.score = 0
     self.time = 0
     self.lines = 0
     self.b2b = 0
@@ -454,6 +455,17 @@ function Game:lock()
     self:placePieceOnField()
     local lines = self:clearLines()
     self.lines = self.lines + lines
+    if lines == 4 then
+      self.score = self.score + 500
+    elseif spin then
+          if mini then
+            self.score = self.score + (100 * lines) + 25
+          else
+            self.score = self.score + (100 * lines) + 50
+          end
+        else
+          self.score = self.score + (100 * lines)
+    end
     if cstate and cstate.onClearLines then
         cstate:onClearLines(lines)
     end
@@ -532,6 +544,8 @@ function Game:harddrop()
     end
     self:sound('lock')
     self:lock()
+
+
 end
 
 function Game:hold()
