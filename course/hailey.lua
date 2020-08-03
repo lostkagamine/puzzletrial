@@ -10,6 +10,7 @@ return {
 
             },
             objective = 'Clear 15 lines!',
+            rotation = "hairs",
             onClear = function(self, lines, spin, mini)
                 if gamestate.lines >= 15 then
                     gamestate:signalClear()
