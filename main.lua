@@ -1,8 +1,17 @@
-_GAME_VERSION = '1.2.0'
+_GAME_VERSION_CODE = "1.3.0"
 
 game = {}
 
 require "constants"
+
+if RELEASE then
+    _GAME_VERSION = _GAME_VERSION_CODE
+else
+    _GAME_VERSION = string.format("%s-%s%s", _GAME_VERSION_CODE,
+                                           os.date("%Y%m%d"),
+                                           os.date("%H%M%S")) 
+end
+
 Input = require "lib/input"
 class = require "lib/middleclass"
 require "repeatsounds"
@@ -131,8 +140,30 @@ game.speedrunmode = false
 game.speedruntimer = 0
 game.speedrunfinaltime = 0
 
+_FULLSCREEN = false
+_VSYNC = false
+
 videoplaying = nil
 local vc = love.graphics.newCanvas()
+
+local function updateWindowMode()
+    love.window.setMode(800, 600, {
+        fullscreen = _FULLSCREEN,
+        fullscreentype = 'desktop',
+        vsync = _VSYNC and 1 or 0,
+        resizable = true
+    })
+end
+
+function doFullscreenSwitch()
+    _FULLSCREEN = not _FULLSCREEN
+    updateWindowMode()
+end
+
+function doVsyncSwitch()
+    _VSYNC = not _VSYNC
+    updateWindowMode()
+end
 
 function switchstate(t)
     if not states[t] then return end
@@ -339,6 +370,12 @@ or press [ESCAPE] to quit.]], 20, 80)
         return
     end
 
+    local screenwidth = love.graphics.getWidth()
+    local screenheight = love.graphics.getHeight()
+
+    local desiredX = 800
+    local desiredY = 600
+
     love.graphics.setCanvas({screen_cvs, stencil=true, depth=true})
     love.graphics.clear()
     love.graphics.setBlendMode('alpha')
@@ -347,8 +384,17 @@ or press [ESCAPE] to quit.]], 20, 80)
         cstate:draw()
     end
 
+    love.graphics.push()
+
     love.graphics.setCanvas()
     love.graphics.setBlendMode('alpha', 'premultiplied')
+
+    love.graphics.setDefaultFilter('linear', 'nearest')
+    local scale_factor = math.min(screenwidth / desiredX, screenheight / desiredY)
+    local tfx, tfy = (screenwidth - (scale_factor * desiredX)) / 2, (screenheight - (scale_factor * desiredY)) / 2
+
+	love.graphics.translate(tfx, tfy)
+	love.graphics.scale(scale_factor)
 
     if cur_shader then
         love.graphics.setShader(cur_shader)
@@ -363,6 +409,8 @@ or press [ESCAPE] to quit.]], 20, 80)
 
     love.graphics.setBlendMode('alpha')
 
+    love.graphics.pop()
+
     if videoplaying then
         love.graphics.setCanvas(vc)
         love.graphics.draw(videoplaying)
@@ -371,13 +419,12 @@ or press [ESCAPE] to quit.]], 20, 80)
         love.graphics.setShader(shaders.chroma)
         shaders.chroma:send('pos', videoplaying:tell())
         shaders.chroma:send('playing', videoplaying:isPlaying())
-        love.graphics.draw(vc)
+        love.graphics.draw(vc, tfx, tfy, 0, scale_factor, scale_factor)
         love.graphics.setBlendMode('alpha')
     end
     --love.graphics.present()
 
     love.graphics.setShader()
-
 
     love.graphics.setColor(1, 1, 1)
     love.graphics.setFont(font.reg)
@@ -404,6 +451,23 @@ function love.keypressed(k, sc, r)
     if k == 'f1' then
         drawdebug = not drawdebug
         return
+    end
+
+    if k == 'f2' then
+        doFullscreenSwitch()
+        return
+    end
+
+    if k == 'f8' and not RELEASE then
+        error('manually initiated')
+    end
+
+    if k == 'f9' and not RELEASE then
+        gamestate:signalClear()
+    end
+
+    if k == 'f10' and not RELEASE then
+        gamestate.lines = gamestate.lines + 100
     end
 
     if cstate and cstate.keydown then

@@ -193,6 +193,7 @@ function Game:initialize(rotation)
     self.x, self.y = self.spawnx, self.spawny
     self.holdPiece = nil
     self.holdAvailable = true
+    self.disableHold = false
 
     self.infiniteHold = false
 
@@ -214,6 +215,7 @@ function Game:initialize(rotation)
     self.shiftDownRows = {}
 
     self.clearing = false
+    self.infinityActions = 0
 
     if stage.postInit then
         stage:postInit(self)
@@ -288,6 +290,16 @@ function Game:sound(s)
     game.repeatsfx[s]:play()
 end
 
+function Game:infinity()
+    if self.infinityActions >= 16 then
+        self.infinityActions = 0
+        self:sound('lock')
+        self:lock()
+        return true
+    end
+    return false
+end
+
 function Game:movePiece(ex, ey)
     if self.lrReverse then
         ex = ex * -1
@@ -295,6 +307,11 @@ function Game:movePiece(ex, ey)
     local tx, ty = self.x+ex, self.y+ey
     if not self.board:isColliding(nil, tx, ty) then
         self.x, self.y = tx, ty
+        if self.board:isColliding(nil, tx, ty+1) then
+            -- piece should be on the ground
+            self.infinityActions = self.infinityActions + 1
+            if self:infinity() then return end
+        end
         self.counters.lock = 0
         if cstate and cstate.onMove then
             cstate:onMove()
@@ -330,6 +347,11 @@ function Game:rotate(dir, ignoreblock)
     self.lastAction = 'rotate'
     self.counters.lock = 0
     self.rotationsPerPiece = self.rotationsPerPiece + 1
+
+    if self.board:isColliding(nil, self.x, self.y+1) then
+        self.infinityActions = self.infinityActions + 1
+        if self:infinity() then return end
+    end
 end
 
 function Game:doARE(dt)
@@ -521,6 +543,7 @@ function Game:shiftDownTimer(dt)
 end
 
 function Game:harddrop()
+    if stage.blockHarddrop then return end
     if not self.piece.active then return end -- fix bug
     if not self.board:isColliding(nil, nil, self.y+1) then
         self.lastAction = 'drop'
@@ -533,6 +556,7 @@ end
 function Game:hold()
     if stage.blockHold then return end
     if not self.holdAvailable then return end
+    if self.disableHold then return end
     if self.holdPiece == nil or self.sakuraHold then
         self.holdPiece = self.piece.name
         self.piece.active = false

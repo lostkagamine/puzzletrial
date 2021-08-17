@@ -167,6 +167,8 @@ return {
                 "Time for... fast drop... with a twist!"
             },
             objective = "Clear 10 lines!",
+            blockHold = true,
+            blockHarddrop = true,
             update = function(self, dt)
                 if gamestate.lines >= 10 then
                     gamestate:signalClear()

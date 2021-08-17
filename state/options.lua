@@ -15,6 +15,14 @@ local menu = {
     end, function()
         return sdSelect and 'Are you sure you want to erase your save and quit?' or 'Erase ALL save data permanently'
     end},
+    {'Toggle fullscreen', function()
+        doFullscreenSwitch()
+    end},
+    {'y', function()
+        doVsyncSwitch()
+    end, function()
+        return _VSYNC and 'Vert. sync: on' or 'Vert. sync: off'
+    end}
 }
 
 local selection = 1

@@ -15,7 +15,7 @@ return {
             end,
             update = function(self, dt)
                 if gamestate.lines >= 5 then
-                    if love.math.random(1, 100) <= 5 then
+                    if (not RELEASE) or love.math.random(1, 100) <= 5 then
                         stopmusic()
                         fmv.ronaldinho:play()
                         videoplaying = fmv.ronaldinho
@@ -89,7 +89,7 @@ return {
                 end
             end,
             getGoalText = function(self)
-                return ("%d/5"):format(self.b2bs)
+                return ("%d/3"):format(self.b2bs)
             end
         },
         {
@@ -106,7 +106,7 @@ return {
                 end
             end,
             getGoalText = function(self)
-                return ("%s/80"):format(gamestate.lines)
+                return ("%s/40"):format(gamestate.lines)
             end
         },
         {
@@ -114,6 +114,8 @@ return {
                 "NES mode returns, clear a Quad!"
             },
             objective = "Clear a Quad!",
+            blockHold = true,
+            blockHarddrop = true,
             onClear = function(self, lines, spin, mini)
                 if lines >= 4 then
                     gamestate:signalClear()
