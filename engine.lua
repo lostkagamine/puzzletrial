@@ -465,6 +465,7 @@ function Game:lock()
     -- (change where you place this if you want)
     self.infinityActions = 0
 
+    self:sound('lock')
     if cstate and cstate.onLock then
         cstate:onLock()
     end
