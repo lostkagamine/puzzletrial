@@ -2,16 +2,16 @@ game.spinDetection = {}
 game.spinDetection.T = {
     {{2, 0, 2},
      {0, 0, 0},
-     {1, 1, 1}},
+     {1, 0, 1}},
     {{1, 0, 2},
-     {1, 0, 0},
+     {0, 0, 0},
      {1, 0, 2}},
-    {{1, 1, 1},
+    {{1, 0, 1},
      {0, 0, 0},
      {2, 0, 2}},
     {{2, 0, 1},
-     {0, 0, 1},
-     {2, 0, 1}}
+     {0, 0, 0},
+     {2, 0, 1}},
 }
 
 ParkMiller = class('ParkMiller')
@@ -292,8 +292,6 @@ end
 
 function Game:infinity()
     if self.infinityActions >= 16 then
-        self.infinityActions = 0
-        self:sound('lock')
         self:lock()
         return true
     end
@@ -436,7 +434,6 @@ function Game:doLockDelay(dt)
         self.counters.lock = self.counters.lock + dt
         if self.counters.lock >= self.delays.lock then 
             self.counters.lock = 0
-            self:sound('lock')
             self:lock()
         end
     end
@@ -464,6 +461,11 @@ function Game:placePieceOnField()
 end
 
 function Game:lock()
+    -- reset infinity actions on locking the piece
+    -- (change where you place this if you want)
+    self.infinityActions = 0
+
+    self:sound('lock')
     if cstate and cstate.onLock then
         cstate:onLock()
     end
@@ -549,7 +551,6 @@ function Game:harddrop()
         self.lastAction = 'drop'
         self.y = self:findLowestY()
     end
-    self:sound('lock')
     self:lock()
 end
 
@@ -557,6 +558,11 @@ function Game:hold()
     if stage.blockHold then return end
     if not self.holdAvailable then return end
     if self.disableHold then return end
+
+    -- reset infinity actions on holding the piece
+    -- (change where you place this if you want)
+    self.infinityActions = 0
+
     if self.holdPiece == nil or self.sakuraHold then
         self.holdPiece = self.piece.name
         self.piece.active = false
