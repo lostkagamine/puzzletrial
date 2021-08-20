@@ -559,7 +559,7 @@ function Game:hold()
     if not self.holdAvailable then return end
     if self.disableHold then return end
 
-    -- reset infinity actions on locking the piece
+    -- reset infinity actions on holding the piece
     -- (change where you place this if you want)
     self.infinityActions = 0
 
