@@ -558,6 +558,11 @@ function Game:hold()
     if stage.blockHold then return end
     if not self.holdAvailable then return end
     if self.disableHold then return end
+
+    -- reset infinity actions on locking the piece
+    -- (change where you place this if you want)
+    self.infinityActions = 0
+
     if self.holdPiece == nil or self.sakuraHold then
         self.holdPiece = self.piece.name
         self.piece.active = false
