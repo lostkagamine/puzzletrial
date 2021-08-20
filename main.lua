@@ -1,4 +1,4 @@
-_GAME_VERSION_CODE = "1.3.0"
+_GAME_VERSION_CODE = "1.3.1"
 
 game = {}
 

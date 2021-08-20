@@ -35,6 +35,8 @@ by Oshisaure
 Additional shader programming by
 the Moonshine developers
 
+Bugfixes and other contributions by
+Milla (https://github.com/MillaBasset)
 
 
 %s
