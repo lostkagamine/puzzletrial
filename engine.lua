@@ -292,8 +292,6 @@ end
 
 function Game:infinity()
     if self.infinityActions >= 16 then
-        self.infinityActions = 0
-        self:sound('lock')
         self:lock()
         return true
     end
@@ -436,7 +434,6 @@ function Game:doLockDelay(dt)
         self.counters.lock = self.counters.lock + dt
         if self.counters.lock >= self.delays.lock then 
             self.counters.lock = 0
-            self:sound('lock')
             self:lock()
         end
     end
@@ -464,6 +461,10 @@ function Game:placePieceOnField()
 end
 
 function Game:lock()
+    -- reset infinity actions on locking the piece
+    -- (change where you place this if you want)
+    self.infinityActions = 0
+
     if cstate and cstate.onLock then
         cstate:onLock()
     end
@@ -549,7 +550,6 @@ function Game:harddrop()
         self.lastAction = 'drop'
         self.y = self:findLowestY()
     end
-    self:sound('lock')
     self:lock()
 end
 
