@@ -572,7 +572,7 @@ function Game:hold()
         self.holdPiece = self.piece.name
         self.piece = Piece:new(h, self)
         self.x, self.y = self.spawnx, self.spawny
-        if h == 'O' then self.x = self.x + 1 end
+        --if h == 'O' then self.x = self.x + 1 end
         self.counters.lock = 0
         self.counters.gravity = 0
     end
@@ -589,7 +589,7 @@ function Game:nextPiece(held)
     table.remove(self.nextQueue, 1)
     table.insert(self.nextQueue, self.rng:next())
     self.x, self.y = self.spawnx, self.spawny
-    if h == 'O' then self.x = self.x + 1 end
+    --if h == 'O' then self.x = self.x + 1 end
     self.lastAction = 'spawn'
 
     self.counters.lock = 0
